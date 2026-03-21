@@ -12,10 +12,10 @@ tasks:
       - golangci-lint run ./...
   migrate-up:
     cmds:
-      - migrate -path db/migrations -database "postgresql://neondb_owner:npg_y9ph0jPlEYAe@ep-nameless-paper-a4eyqgdh-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require" up
+      - migrate -path db/migrations Ae@ere" up
   migrate-down:
     cmds:
-      - migrate -path db/migrations -database "postgresql://neondb_owner:npg_y9ph0jPlEYAe@ep-nameless-paper-a4eyqgdh-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require" down
+      - migrate"censored 😜" down
   docker-up:
     cmds:
       - docker compose -f docker/docker-compose.yml up -d 
