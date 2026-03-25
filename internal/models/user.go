@@ -1,3 +1,4 @@
+// Package models contains database models
 package models
 
 import (
@@ -6,42 +7,42 @@ import (
 	"gorm.io/gorm"
 )
 
+// User represents an application user
 type User struct {
-	ID         		uint     			`json:"id" gorm:"primaryKey"`
-	Email      		string   			`json:"email" gorm:"uniqueIndex,not null"`
-	Password   		string   			`json:"-" gorm:"not null"`
-	FirstName  		string   			`json:"first_name" gorm:"not null"`
-	SecondName 		string   			`json:"last_name"  gorm:"not null"`
-	Phone      		string   			`json:"phone"`
-	IsActive   		bool     			`json:"is_active"   gorm:"default:true"`
-	Role       		UserRole 			`json:"role" gorm:"default:customer"`
-	CreatedAt  		time.Time			`json:"created_at"`
-	UpdatedAt  	 	time.Time			`json:"updated_at"`
-	DeletedAt  	  	gorm.DeletedAt		`json:"-" gorm:"index"`
+	ID         uint           `json:"id" gorm:"primaryKey"`
+	Email      string         `json:"email" gorm:"uniqueIndex;not null"`
+	Password   string         `json:"-" gorm:"not null"`
+	FirstName  string         `json:"first_name" gorm:"not null"`
+	SecondName string         `json:"last_name" gorm:"not null"`
+	Phone      string         `json:"phone"`
+	IsActive   bool           `json:"is_active" gorm:"default:true"`
+	Role       UserRole       `json:"role" gorm:"default:customer"`
+	CreatedAt  time.Time      `json:"created_at"`
+	UpdatedAt  time.Time      `json:"updated_at"`
+	DeletedAt  gorm.DeletedAt `json:"-" gorm:"index"`
 
-	RefreshTokens 	[]RefreshToken 		`json:"-"`
-	Orders 		  	[]Order 			`json:"-"`
-	Cart 		  	Cart				`json:"-"`
-
-
+	RefreshTokens []RefreshToken `json:"-"`
+	Orders        []Order        `json:"-"`
+	Cart          Cart           `json:"-"`
 }
 
+// UserRole represents user roles
+type UserRole string
 
-type UserRole string 
-
-const(
-	UserRoleCustomer UserRole="customer"
-	UserRoleAdmin	 UserRole="admin"
+// User role constants
+const (
+	UserRoleCustomer UserRole = "customer"
+	UserRoleAdmin    UserRole = "admin"
 )
 
+// RefreshToken represents a refresh token
+type RefreshToken struct {
+	ID        uint           `json:"id" gorm:"primaryKey"`
+	UserID    uint           `json:"user_id" gorm:"not null"`
+	Token     string         `json:"token" gorm:"uniqueIndex;not null"`
+	ExpiresAt time.Time      `json:"expires_at" gorm:"not null"`
+	CreatedAt time.Time      `json:"created_at"`
+	DeletedAt gorm.DeletedAt `json:"-" gorm:"index"`
 
-type RefreshToken struct{
-	ID		uint 		`json:"id" gorm:"primaryKey"`
-	UserID 	uint 		`json:"user_id" gorm:"not null"`
-	Token 	string		`json:"token" gorm:"uniqueIndex,not null"`
-	ExpiresAt time.Time	`json:"expires_at" gorm:"not null"`
-	CreatedAt time.Time	`json:"created_at"`
-	DeletedAt gorm.DeletedAt	`json:"-" gorm:"index"`
-
-	User User	`json:"-"`
+	User User `json:"-"`
 }

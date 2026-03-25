@@ -1,3 +1,4 @@
+// Package models contains database models
 package models
 
 import (
@@ -6,6 +7,7 @@ import (
 	"gorm.io/gorm"
 )
 
+// Category represents a product category
 type Category struct {
 	ID          uint           `json:"id" gorm:"primaryKey"`
 	Name        string         `json:"name" gorm:"not null"`
@@ -15,41 +17,38 @@ type Category struct {
 	UpdatedAt   time.Time      `json:"updated_at"`
 	DeletedAt   gorm.DeletedAt `json:"-" gorm:"index"`
 
-	// Relationships
 	Products []Product `json:"-"`
 }
 
-
-
+// Product represents a product
 type Product struct {
-    ID          uint           `json:"id" gorm:"primaryKey"`
-    CategoryID  uint           `json:"category_id" gorm:"not null"`
-    Name        string         `json:"name" gorm:"not null"`
-    Description string         `json:"description"`
-    Price       float64        `json:"price" gorm:"not null"`
-    Stock       int            `json:"stock" gorm:"default:0"`
-    SKU         string         `json:"sku" gorm:"uniqueIndex;not null"`
-    IsActive    bool           `json:"is_active" gorm:"default:true"`
-    CreatedAt   time.Time      `json:"created_at"`
-    UpdatedAt   time.Time      `json:"updated_at"`
-    DeletedAt   gorm.DeletedAt `json:"-" gorm:"index"`
+	ID          uint           `json:"id" gorm:"primaryKey"`
+	CategoryID  uint           `json:"category_id" gorm:"not null"`
+	Name        string         `json:"name" gorm:"not null"`
+	Description string         `json:"description"`
+	Price       float64        `json:"price" gorm:"not null"`
+	Stock       int            `json:"stock" gorm:"default:0"`
+	SKU         string         `json:"sku" gorm:"uniqueIndex;not null"`
+	IsActive    bool           `json:"is_active" gorm:"default:true"`
+	CreatedAt   time.Time      `json:"created_at"`
+	UpdatedAt   time.Time      `json:"updated_at"`
+	DeletedAt   gorm.DeletedAt `json:"-" gorm:"index"`
 
-    // Relationships
-    Category   Category       `json:"category"`
-    Images     []ProductImage `json:"images"`
-    OrderItems []OrderItem    `json:"-"`
-    CartItems  []CartItem     `json:"-"`
+	Category   Category       `json:"category"`
+	Images     []ProductImage `json:"images"`
+	OrderItems []OrderItem    `json:"-"`
+	CartItems  []CartItem     `json:"-"`
 }
 
+// ProductImage represents product images
 type ProductImage struct {
-    ID        uint           `json:"id" gorm:"primaryKey"`
-    ProductID uint           `json:"product_id" gorm:"not null"`
-    URL       string         `json:"url" gorm:"not null"`
-    AltText   string         `json:"alt_text"`
-    IsPrimary bool           `json:"is_primary" gorm:"default:false"`
-    CreatedAt time.Time      `json:"created_at"`
-    DeletedAt gorm.DeletedAt `json:"-" gorm:"index"`
+	ID        uint           `json:"id" gorm:"primaryKey"`
+	ProductID uint           `json:"product_id" gorm:"not null"`
+	URL       string         `json:"url" gorm:"not null"`
+	AltText   string         `json:"alt_text"`
+	IsPrimary bool           `json:"is_primary" gorm:"default:false"`
+	CreatedAt time.Time      `json:"created_at"`
+	DeletedAt gorm.DeletedAt `json:"-" gorm:"index"`
 
-    // Relationships
-    Product Product `json:"-"`
+	Product Product `json:"-"`
 }
