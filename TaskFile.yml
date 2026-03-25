@@ -22,4 +22,5 @@ tasks:
   docker-down:
     cmds:
       - docker compose -f docker/docker-compose.yml down
-            
+
+      
