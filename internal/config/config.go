@@ -67,7 +67,7 @@ func Load() (*Config, error) {
 
 	return &Config{
 		Server: ServerConfig{
-			Port:    getEnv("PORT", "8080"),
+			Port:    getEnv("PORT", ":8080"),
 			GinMode: getEnv("GIN_MODE", "debug"),
 		},
 		Database: DatabaseConfig{
