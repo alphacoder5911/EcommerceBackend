@@ -1,3 +1,4 @@
+// This file contains utility functions for sending standardized JSON responses in a Gin web application. It defines response structures and helper functions for success and error responses, including paginated responses.
 package utills
 
 import (

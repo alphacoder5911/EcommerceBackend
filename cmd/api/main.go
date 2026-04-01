@@ -76,6 +76,7 @@ func main() {
 
 	if err:=httpServer.Shutdown(ctx);err!=nil{
 		log.Fatal().Err(err).Msg("Server failed to shutdown")
+		return 
 
 	}
 
