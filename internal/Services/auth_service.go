@@ -3,7 +3,7 @@ package services
 import (
 	"errors"
 	"fmt"
-	"log"
+
 	"time"
 
 	"github.com/alphacoder5911/EcommerceBackend/internal/config"
@@ -59,7 +59,7 @@ func (s *AuthService) Register(req *dto.RegisterRequest)(*dto.AuthResponse,error
 		fmt.Println("Unable to create cart")
 
 	}
-	return s.generateAUthResponse(&user),nil
+	return s.generateAUthResponse(&user)
 }
 
 
@@ -73,7 +73,7 @@ func (s *AuthService) Login(req *dto.LoginRequest)(*dto.AuthResponse,error){
 		return nil,errors.New("Invalid credentials")
 	}
 
-	return s.generateAUthResponse(&user),nil
+	return s.generateAUthResponse(&user)
 }
 
 func (s *AuthService) RefreshToken(req *dto.RefreshTokenRequest)(*dto.AuthResponse,error){
