@@ -12,14 +12,15 @@ tasks:
       - golangci-lint run ./...
   migrate-up:
     cmds:
-      - migrate -path db/migrations Ae@ere" up
+      - migrate -path db/migrations -database "url" up
   migrate-down:
     cmds:
-      - migrate"censored 😜" down
+      - migrate -path db/migrations -database "url" down
   docker-up:
     cmds:
       - docker compose -f docker/docker-compose.yml up -d 
   docker-down:
     cmds:
       - docker compose -f docker/docker-compose.yml down
-            
+
+      
