@@ -6,7 +6,6 @@ import (
 
 	"github.com/alphacoder5911/EcommerceBackend/internal/config"
 	"github.com/golang-jwt/jwt/v5"
-	"github.com/golangci/golangci-lint/pkg/golinters/interfacebloat"
 )
 
 type Claims struct{
