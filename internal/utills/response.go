@@ -1,3 +1,4 @@
+// This file contains utility functions for sending standardized JSON responses in a Gin web application. It defines response structures and helper functions for success and error responses, including paginated responses.
 package utills
 
 import (
@@ -25,33 +26,33 @@ type PaginationMeta struct {
 	TotalPages int   `json:"total_pages"`
 }
 
-func SuccessResponse(c *gin.Context,message string , data interface{}){
-		c.JSON(http.StatusOK,Response{
-			Success: true,
-			Message: message,
-			Data: data,
-		})
+func SuccessResponse(c *gin.Context, message string, data interface{}) {
+	c.JSON(http.StatusOK, Response{
+		Success: true,
+		Message: message,
+		Data:    data,
+	})
 }
 
-func CreatedResponse(c *gin.Context,message string , data interface{}){
-		c.JSON(http.StatusCreated,Response{
-			Success: true,
-			Message: message,
-			Data: data,
-		})
+func CreatedResponse(c *gin.Context, message string, data interface{}) {
+	c.JSON(http.StatusCreated, Response{
+		Success: true,
+		Message: message,
+		Data:    data,
+	})
 }
 
-func ErrorResponse(c *gin.Context,statusCode int,message string , err error){
-		response:=Response{
-			Success: false,
-			Message: message,
-		}
+func ErrorResponse(c *gin.Context, statusCode int, message string, err error) {
+	response := Response{
+		Success: false,
+		Message: message,
+	}
 
-		if err!=nil{
-		response.Error=err.Error()
-		}
+	if err != nil {
+		response.Error = err.Error()
+	}
 
-		c.JSON(statusCode,response)
+	c.JSON(statusCode, response)
 }
 func BadRequestResponse(c *gin.Context, message string, err error) {
 	ErrorResponse(c, http.StatusBadRequest, message, err)
@@ -69,18 +70,16 @@ func NotFoundResponse(c *gin.Context, message string) {
 	ErrorResponse(c, http.StatusNotFound, message, nil)
 }
 
-
-
 func InternalServerErrorResponse(c *gin.Context, message string, err error) {
 	ErrorResponse(c, http.StatusInternalServerError, message, err)
 }
 
-func PaginatedSuccessResponse(c *gin.Context,message string,data interface{},meta PaginationMeta){
-	c.JSON(http.StatusOK,PaginatedResponse{
+func PaginatedSuccessResponse(c *gin.Context, message string, data interface{}, meta PaginationMeta) {
+	c.JSON(http.StatusOK, PaginatedResponse{
 		Response: Response{
 			Success: true,
 			Message: message,
-			Data: data,
+			Data:    data,
 		},
 		Meta: meta,
 	})

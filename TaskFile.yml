@@ -22,5 +22,8 @@ tasks:
   docker-down:
     cmds:
       - docker compose -f docker/docker-compose.yml down
+  format:
+    cmds:
+      - go fmt ./...
 
       
