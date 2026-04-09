@@ -12,7 +12,7 @@ tasks:
       - golangci-lint run ./...
   migrate-up:
     cmds:
-      - migrate -path db/migrations -database "url" up
+      - migrate -path db/migrations -database "url"  up
   migrate-down:
     cmds:
       - migrate -path db/migrations -database "url" down
