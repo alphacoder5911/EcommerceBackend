@@ -31,10 +31,22 @@ func (s *Server) SetupRoutes() *gin.Engine {
 	router.Use(gin.Logger())
 	router.Use(gin.Recovery())
 	router.Use(s.corsMiddleware())
-
+	
 	// Add routes
 
 	router.GET("/health", s.healthCheck)
+
+	api:=router.Group("/api/v1")
+	{
+		auth:=api.Group("/auth")
+		{//nolint:gocritic // I need this for readability
+			auth.POST("/register",s.Register)
+			auth.POST("/login",s.Login)
+			auth.POST("/refresh",s.RefreshToken)
+			auth.POST("/logout",s.Logout)
+		}
+	}
+
 
 	return router
 }

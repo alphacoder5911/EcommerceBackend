@@ -49,7 +49,7 @@ func (s *Server) RefreshToken(c *gin.Context){
 	if err:=c.ShouldBindJSON(&req);err!=nil{
 		utills.BadRequestResponse(c,"Invalid creds",err)
 		return
-	}
+	}                     
 	
 	authService:=services.NewAuthService(s.db,s.Config)
 	response,err:=authService.RefreshToken(&req)

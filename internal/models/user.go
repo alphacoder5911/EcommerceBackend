@@ -13,7 +13,7 @@ type User struct {
 	Email      string         `json:"email" gorm:"uniqueIndex;not null"`
 	Password   string         `json:"-" gorm:"not null"`
 	FirstName  string         `json:"first_name" gorm:"not null"`
-	SecondName string         `json:"last_name" gorm:"not null"`
+	LastName string         `json:"last_name" gorm:"not null"`
 	Phone      string         `json:"phone"`
 	IsActive   bool           `json:"is_active" gorm:"default:true"`
 	Role       UserRole       `json:"role" gorm:"default:customer"`

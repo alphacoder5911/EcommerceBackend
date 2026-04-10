@@ -31,8 +31,8 @@ func (s *AuthService) Register(req *dto.RegisterRequest)(*dto.AuthResponse,error
 	// Checking if user already exists 
 	var existingUser int64
 
-	if err:= s.db.Where("email = ?",req.Email).First(&existingUser).Error;err!=nil{
-		return nil,errors.New("User not found")
+	if err:= s.db.Where("email = ?",req.Email).First(&existingUser).Error;err == nil{
+		return nil,errors.New("User already exists")
 	}
 
 	hashedPwd,err:=utills.HashPassword(req.Password)
@@ -44,7 +44,7 @@ func (s *AuthService) Register(req *dto.RegisterRequest)(*dto.AuthResponse,error
 		Email: req.Email,
 		Password: hashedPwd,
 		FirstName: req.FirstName,
-		SecondName: req.SecondName,
+		LastName: req.LastName,
 		Phone: req.Phone,
 		Role: models.UserRoleCustomer,
 	}
@@ -65,7 +65,7 @@ func (s *AuthService) Register(req *dto.RegisterRequest)(*dto.AuthResponse,error
 
 func (s *AuthService) Login(req *dto.LoginRequest)(*dto.AuthResponse,error){
 	var user models.User
-	if err:= s.db.Where("email=? AND is_active=?",req.Email,true).Error;err!=nil{
+	if err:= s.db.Where("email=? AND is_active=?",req.Email,true).First(&user).Error;err!=nil{
 		return nil,errors.New("INvalid credentials ")
 	}
 
@@ -118,7 +118,7 @@ func (s *AuthService) generateAUthResponse(user *models.User) (*dto.AuthResponse
 			ID: user.ID,
 			Email: user.Email,
 			FirstName: user.FirstName,
-			SecondName: user.SecondName,
+			SecondName: user.LastName,
 			Phone: user.Phone,
 			Role: string(user.Role),
 			IsActive: user.IsActive,
