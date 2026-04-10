@@ -4,6 +4,7 @@ package server
 import (
 	"net/http"
 
+	services "github.com/alphacoder5911/EcommerceBackend/internal/Services"
 	"github.com/alphacoder5911/EcommerceBackend/internal/config"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog"
@@ -14,6 +15,7 @@ type Server struct {
 	Config *config.Config
 	db     *gorm.DB
 	logger zerolog.Logger
+	authService  *services.AuthService
 }
 
 func NewServer(config *config.Config, db *gorm.DB, logger zerolog.Logger) *Server {
@@ -21,6 +23,7 @@ func NewServer(config *config.Config, db *gorm.DB, logger zerolog.Logger) *Serve
 		Config: config,
 		db:     db,
 		logger: logger,
+		authService: services.NewAuthService(db,config),
 	}
 }
 
@@ -44,6 +47,12 @@ func (s *Server) SetupRoutes() *gin.Engine {
 			auth.POST("/login",s.Login)
 			auth.POST("/refresh",s.RefreshToken)
 			auth.POST("/logout",s.Logout)
+		}
+
+		protected:=api.Group("/prot")
+		protected.Use(s.authMiddleware())
+		{
+			protected.GET("/profile",s.profile)
 		}
 	}
 

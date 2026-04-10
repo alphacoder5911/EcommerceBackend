@@ -97,7 +97,11 @@ func (s *AuthService) RefreshToken(req *dto.RefreshTokenRequest)(*dto.AuthRespon
 }
 
 func (s *AuthService) Logout(refreshToken string) error{
-	return s.db.Where("token = ?",refreshToken).Delete(&models.RefreshToken{}).Error
+	if err:=s.db.Where("token = ?",refreshToken).Delete(&models.RefreshToken{}).Error;err!=nil{
+		return err
+	}
+
+	return nil
 }
 
 func (s *AuthService) generateAUthResponse(user *models.User) (*dto.AuthResponse,error){
@@ -111,7 +115,15 @@ func (s *AuthService) generateAUthResponse(user *models.User) (*dto.AuthResponse
 		return nil,err
 	}
 
-	s.db.Create(&refreshToken)
+	rt:=models.RefreshToken{
+		Token: refreshToken,
+		UserID: user.ID,
+		ExpiresAt: time.Now().Add( s.config.JWT.RefreshTokenExpires),
+	}
+
+	if err:= s.db.Create(&rt).Error;err!=nil{
+		return nil,err
+	}
 	
 	return &dto.AuthResponse{
 		User: dto.UserResponse{
