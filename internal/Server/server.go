@@ -16,6 +16,7 @@ type Server struct {
 	db     *gorm.DB
 	logger zerolog.Logger
 	authService  *services.AuthService
+	userService *services.UserService
 }
 
 func NewServer(config *config.Config, db *gorm.DB, logger zerolog.Logger) *Server {
@@ -24,6 +25,7 @@ func NewServer(config *config.Config, db *gorm.DB, logger zerolog.Logger) *Serve
 		db:     db,
 		logger: logger,
 		authService: services.NewAuthService(db,config),
+		userService: services.NewUserService(db),
 	}
 }
 
@@ -53,6 +55,8 @@ func (s *Server) SetupRoutes() *gin.Engine {
 		protected.Use(s.authMiddleware())
 		{
 			protected.GET("/profile",s.profile)
+			protected.GET("/GetProfile",s.getProfile)
+			protected.POST("/UpdateProfile",s.UpdateProfile)
 		}
 	}
 
