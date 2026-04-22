@@ -182,7 +182,7 @@ func(s *ProductService) getProducts(page,limit int)([]dto.ProductResponse,*utill
 
 	return response,meta,nil
 }
-
+	
 
 func (s *ProductService) getProduct(id uint)(*dto.ProductResponse,error){
 	var product models.Product
@@ -215,5 +215,15 @@ if req.IsActive !=nil{
 	return s.getProduct(id)
 	
 
+
+}
+
+func (s *ProductService) DeleteProduct(id uint) error{
+	var product models.Product
+	if err:= s.db.First(&product,id).Error;err !=nil{
+		return err
+	}
+
+	return s.db.Delete(models.Product{},id).Error
 
 }
