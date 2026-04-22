@@ -17,6 +17,7 @@ type Server struct {
 	logger zerolog.Logger
 	authService  *services.AuthService
 	userService *services.UserService
+	productService *services.ProductService
 }
 
 func NewServer(config *config.Config, db *gorm.DB, logger zerolog.Logger) *Server {
@@ -26,6 +27,7 @@ func NewServer(config *config.Config, db *gorm.DB, logger zerolog.Logger) *Serve
 		logger: logger,
 		authService: services.NewAuthService(db,config),
 		userService: services.NewUserService(db),
+		productService: services.NewProductService(db),
 	}
 }
 
