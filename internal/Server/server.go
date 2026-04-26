@@ -59,15 +59,25 @@ func (s *Server) SetupRoutes() *gin.Engine {
 			protected.GET("/profile",s.profile)
 			protected.GET("/GetProfile",s.getProfile)
 			protected.POST("/UpdateProfile/:id",s.UpdateProfile)
-			protected.POST("/AddCategory",s.CreateCategory)
-			protected.GET("/GetCategories",s.GeetCategories)
-			protected.POST("/UpdateCategory/:id",s.UpdateCategory)
-			protected.POST("/DeleteCategory/:id",s.DeleteCategory)
-			protected.POST("/CreateProduct",s.CreateProduct)
-			protected.GET("/GetProducts",s.getProducts)
-			protected.GET("/GetProduct/:id",s.GetProduct)
-			protected.POST("/UpdateProduct/:id",s.UpdateProduct)
-			protected.POST("/DeleteProduct/:id",s.DeleteProduct)
+			
+
+			category:=protected.Group("/category")
+			{
+				category.POST("/AddCategory",s.CreateCategory)
+				category.GET("/GetCategories",s.GeetCategories)
+				category.PUT("/UpdateCategory/:id",s.UpdateCategory)
+				category.DELETE("/DeleteCategory/:id",s.DeleteCategory)
+				//Added proper routes 
+			}
+
+			product:=protected.Group("/product")
+			{
+				product.POST("/CreateProduct",s.CreateProduct)
+				product.GET("/GetProducts",s.getProducts)
+				product.GET("/GetProduct/:id",s.GetProduct)
+				product.PUT("/UpdateProduct/:id",s.UpdateProduct)
+				product.DELETE("/DeleteProduct/:id",s.DeleteProduct)
+			}
 		}
 	}
 
