@@ -67,6 +67,7 @@ func (s *Server) SetupRoutes() *gin.Engine {
 				category.GET("/GetCategories",s.GeetCategories)
 				category.PUT("/UpdateCategory/:id",s.UpdateCategory)
 				category.DELETE("/DeleteCategory/:id",s.DeleteCategory)
+				//Added proper routes 
 			}
 
 			product:=protected.Group("/product")
