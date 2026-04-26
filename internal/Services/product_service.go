@@ -37,7 +37,7 @@ func(s *ProductService) CreateCategory(req *dto.CreateCategoryRequest) (*dto.Cat
 
 func (s *ProductService) GetCategories()([]dto.CategoryResponse,error){
 	var cats []models.Category
-	if err:=s.db.Where("is_active =?",true).First(&cats).Error;err!=nil{
+	if err:=s.db.Where("is_active =?",true).Find(&cats).Error;err!=nil{
 		return nil,err
 	}
 
