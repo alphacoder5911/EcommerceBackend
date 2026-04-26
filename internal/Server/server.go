@@ -58,7 +58,16 @@ func (s *Server) SetupRoutes() *gin.Engine {
 		{
 			protected.GET("/profile",s.profile)
 			protected.GET("/GetProfile",s.getProfile)
-			protected.POST("/UpdateProfile",s.UpdateProfile)
+			protected.POST("/UpdateProfile/:id",s.UpdateProfile)
+			protected.POST("/AddCategory",s.CreateCategory)
+			protected.GET("/GetCategories",s.GeetCategories)
+			protected.POST("/UpdateCategory/:id",s.UpdateCategory)
+			protected.POST("/DeleteCategory/:id",s.DeleteCategory)
+			protected.POST("/CreateProduct",s.CreateProduct)
+			protected.GET("/GetProducts",s.getProducts)
+			protected.GET("/GetProduct/:id",s.GetProduct)
+			protected.POST("/UpdateProduct/:id",s.UpdateProduct)
+			protected.POST("/DeleteProduct/:id",s.DeleteProduct)
 		}
 	}
 

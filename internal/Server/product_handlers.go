@@ -5,7 +5,7 @@ import (
 
 	"github.com/alphacoder5911/EcommerceBackend/internal/dto"
 	"github.com/alphacoder5911/EcommerceBackend/internal/utills"
-	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin"	
 )
 
 func (s *Server) CreateCategory(c *gin.Context){
@@ -87,7 +87,8 @@ func (s *Server) CreateProduct(c *gin.Context) {
 
 
 
-func (s *Server) getCategories(c *gin.Context){
+
+func (s *Server) GeetCategories(c *gin.Context){
 	
 	categories,err:=s.productService.GetCategories()
 	if err!=nil{
@@ -96,4 +97,68 @@ func (s *Server) getCategories(c *gin.Context){
 	}
 
 	utills.SuccessResponse(c,"Categories fetched successfully",categories)
+}
+
+func (s *Server) getProducts(c *gin.Context){
+	page,_:=strconv.Atoi(c.DefaultQuery("page","1"))
+	limit,_:=strconv.Atoi(c.DefaultQuery("limit","10"))
+
+	productsn,meta,err:=s.productService.GetProducts(page,limit)
+	if err!=nil{
+		utills.BadRequestResponse(c,"Failed to get products ",err)
+		return
+	}
+
+	utills.PaginatedSuccessResponse(c,"Products fetched sucessfully",productsn,*meta)
+}
+
+func (s *Server) GetProduct(c *gin.Context){
+	id,err:=strconv.ParseUint(c.Param("id"),10,32)
+	
+	if err!=nil{
+		utills.BadRequestResponse(c,"Invalid id presented",err)
+		return 
+	}
+
+	product,err:=s.productService.GetProduct(uint(id))
+	if err!=nil{
+		utills.NotFoundResponse(c,"product not found ")
+		return 
+	}
+
+	utills.SuccessResponse(c,"Fetched the product successfully",product)
+
+}
+
+func(s *Server) UpdateProduct(c *gin.Context){
+	id,err:=strconv.ParseUint(c.Param("id"),10,32)
+	if err!=nil{
+		utills.BadRequestResponse(c,"Wrong id provided ",err)
+		return
+	}
+
+	var update dto.UpdateProductRequest
+	if err:=c.ShouldBindJSON(&update);err!= nil {
+		utills.BadRequestResponse(c,"Invalid json",err)
+		return
+	}
+
+	updatedProd,err:=s.productService.UpdateProduct(uint(id),&update)
+	if err!=nil{
+		utills.BadRequestResponse(c,"Failed to update ",err)
+		return
+	}
+
+	utills.SuccessResponse(c,"Updated ",updatedProd)
+}
+
+func (s *Server) DeleteProduct(c *gin.Context){
+	id,err:=strconv.ParseUint(c.Param("id"),10,32)
+	if err!=nil{
+		utills.BadRequestResponse(c,"Invalid id ",err)
+		return
+	}
+
+	err=s.productService.DeleteCategory(uint(id))
+	utills.SuccessResponse(c,"Deleted Successfully",nil)
 }
