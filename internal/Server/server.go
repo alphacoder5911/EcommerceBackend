@@ -58,7 +58,7 @@ func (s *Server) SetupRoutes() *gin.Engine {
 		{
 			protected.GET("/profile",s.profile)
 			protected.GET("/GetProfile",s.getProfile)
-			protected.POST("/UpdateProfile/:id",s.UpdateProfile)
+			protected.POST("/UpdateProfile",s.UpdateProfile)
 			
 
 			category:=protected.Group("/category")
