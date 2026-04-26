@@ -146,7 +146,7 @@ func (s *ProductService) CreateProduct(req *dto.CreateProductRequest) (*dto.Prod
 }
 
 
-func(s *ProductService) getProducts(page,limit int)([]dto.ProductResponse,*utills.PaginationMeta,error){
+func(s *ProductService) GetProducts(page,limit int)([]dto.ProductResponse,*utills.PaginationMeta,error){
 	if page<1{
 		page=1
 	}
@@ -184,7 +184,7 @@ func(s *ProductService) getProducts(page,limit int)([]dto.ProductResponse,*utill
 }
 	
 
-func (s *ProductService) getProduct(id uint)(*dto.ProductResponse,error){
+func (s *ProductService) GetProduct(id uint)(*dto.ProductResponse,error){
 	var product models.Product
 	if err:=s.db.Preload("Category").Preload("Images").First(&product,id).Error;err!=nil{
 		return nil,err
@@ -212,7 +212,7 @@ if req.IsActive !=nil{
 	}
 
 
-	return s.getProduct(id)
+	return s.GetProduct(id)
 	
 
 
